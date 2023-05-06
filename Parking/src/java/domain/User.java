@@ -8,12 +8,14 @@ package domain;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author stefa
  */
 @Entity
+@XmlRootElement
 public class User implements Serializable{
     @Id
     private Integer id;
