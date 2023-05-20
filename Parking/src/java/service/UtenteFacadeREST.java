@@ -5,14 +5,17 @@
  */
 package service;
 
-import domain.User;
+import domain.Utente;
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -29,26 +32,34 @@ import qrLib.QR;
  */
 @Stateless
 @Path("parking")
-public class UserFacadeREST extends AbstractFacade<User> {
+public class UtenteFacadeREST extends AbstractFacade<Utente> {
 
     @PersistenceContext(unitName = "ParkingPU")
     private EntityManager em;
 
-    public UserFacadeREST() {
-        super(User.class);
+    public UtenteFacadeREST() {
+        super(Utente.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(User entity) {
+    public void create(Utente entity) {
         super.create(entity);
+    }
+    
+    @POST
+    @Path("register")
+    public void register(@FormParam("user") String user, @FormParam("password") String password, @FormParam("mail") String mail, @FormParam("name") String name, @FormParam("surname") String surname, @FormParam("date") String date){
+        LocalDate locDate = LocalDate.parse(date);
+        Date data = Date.valueOf(locDate);
+        create(new Utente(user, password, mail, name, surname, data));
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, User entity) {
+    public void edit(@PathParam("id") Integer id, Utente entity) {
         super.edit(entity);
     }
 
@@ -61,21 +72,21 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public User find(@PathParam("id") Integer id) {
+    public Utente find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<User> findAll() {
+    public List<Utente> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<User> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Utente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

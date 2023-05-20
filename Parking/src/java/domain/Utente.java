@@ -16,10 +16,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class User implements Serializable{
+public class Utente implements Serializable{
     @Id
-    private Integer id;
-    private String user;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
     private String password;
     private String mail;
     private String name;
@@ -27,12 +28,11 @@ public class User implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
-    public User() {
+    public Utente() {
     }
 
-    public User(Integer id, String user, String password, String mail, String name, String surname, Date birthDate) {
-        this.id = id;
-        this.user = user;
+    public Utente(String username, String password, String mail, String name, String surname, Date birthDate) {
+        this.username = username;
         this.password = password;
         this.mail = mail;
         this.name = name;
@@ -40,20 +40,12 @@ public class User implements Serializable{
         this.birthDate = birthDate;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getUser() {
-        return user;
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUser(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
