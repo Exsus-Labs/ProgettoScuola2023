@@ -24,6 +24,7 @@ public class User implements Serializable{
     private String mail;
     private String name;
     private String surname;
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     public User() {

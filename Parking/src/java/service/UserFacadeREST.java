@@ -6,6 +6,7 @@
 package service;
 
 import domain.User;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +20,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import qrLib.QR;
 
 /**
  *
@@ -88,4 +91,10 @@ public class UserFacadeREST extends AbstractFacade<User> {
         return em;
     }
     
+    @GET
+    @Path("qr")
+    @Produces("image/png")
+    public Response getQr(){
+        return Response.ok(QR.createQRCodeBufferedImage("caio", 200)).build();
+    }
 }
